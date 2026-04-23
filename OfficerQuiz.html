@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Officer Quiz</title>
+    <link rel="stylesheet" href="OfficerQuiz.css">
+</head>
+<body>
+    <div id="start-screen">
+        <h1>The Officer Quiz</h1>
+        <h2>Lion Company</h2>
+
+        <label for="player-name">Name:</label>
+        <input type="text" id="player-name" placeholder="Enter your name">
+
+        <label for="player-rank">Rank:</label>
+        <select id="player-rank">
+            <option value="" disabled selected>Select your rank</option>
+            <option value="recruit">Recruit</option>
+            <option value="private">Private</option>
+            <option value="corporal">Corporal</option>
+            <option value="sergeant">Sergeant</option>
+            <option value="master-sergeant">Master-Sergeant</option>
+            <option value="esquire">Esquire</option>
+            <option value="knight">Knight</option>
+            <option value="officer-event">Officer-Event</option>
+            <option value="officer-intro">Officer-Intro</option>
+            <option value="officer-training">Officer-Training</option>
+            <option value="commander">Commander</option>
+        </select>
+
+        <button id="start-btn">Start Quiz</button>
+    </div>
+
+    <div id="quiz-screen" hidden>
+        <div id="question-info">
+            <span id="question-counter"></span>
+            <span id="category-label"></span>
+        </div>
+        <p id="question-text"></p>
+        <div id="answer-options"></div>
+        <button id="next-btn" hidden>Next</button>
+    </div>
+
+    <div id="result-screen" hidden>
+        <h2>Results</h2>
+        <p id="result-name"></p>
+        <p id="result-score"></p>
+        <div id="result-details"></div>
+        <button id="restart-btn">Try Again</button>
+    </div>
+
+    <script src="OfficerQuiz.js"></script>
+</body>
+</html>

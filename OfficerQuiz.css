@@ -1,0 +1,158 @@
+@import url(https://fonts.cdnfonts.com/css/morpheus);
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #080c14;
+    color: #d0d8e8;
+    font-family: 'Morpheus', serif;
+}
+#start-screen {
+    background: linear-gradient(170deg, #0e1524, #101828);
+    border: 2px solid #3a5070;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
+    max-width: 720px;
+    width: 100%;
+}
+h1 {
+    text-align: center;
+    font-family: 'Morpheus', serif;
+    font-size: 1.8rem; 
+    color: #bcc6cc;
+    margin-bottom: 5px;
+}
+h2 {
+    text-align: center;
+    font-family: 'Morpheus', serif;
+    font-size: 1.2rem;
+    color: #b0c0d8;
+    margin-bottom: 20px;
+}
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    color: #8aaad0;
+}
+#player-name, #player-rank {
+    width: 100%;
+    padding: 12px 18px;
+    background: rgba(20, 35, 60, 0.8);
+    border: 2px solid #3a5070;
+    border-radius: 8px;
+    color: #e0e8f4;
+    font-size: 1.1rem;
+}
+#start-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 14px 50px;
+    background: linear-gradient(180deg, #2a4060, #1a2a40);
+    border: 2px solid #5080b0;
+    border-radius: 8px;
+    color: #e0e8f4;
+    cursor: pointer;
+}
+#quiz-screen {
+    background: linear-gradient(170deg, #0e1524, #101828);
+    border: 2px solid #3a5070;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
+    max-width: 720px;
+    width: 100%;
+}
+#question-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    color: #8aaad0;
+}
+#question-text {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+#answer-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#answer-options button {
+    padding: 14px 18px;
+    background: rgba(10, 20, 40, 0.5);
+    border: 1px solid #2a3a50;
+    border-radius: 8px;
+    color: #98a8c0;
+    cursor: pointer;
+    font-size: 1.05rem;
+    text-align: left;
+}
+#next-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 14px 50px;
+    background: linear-gradient(180deg, #2a4060, #1a2a40);
+    border: 2px solid #5080b0;
+    border-radius: 8px;
+    color: #e0e8f4;
+    cursor: pointer;
+}
+#result-screen {
+    background: linear-gradient(170deg, #0e1524, #101828);
+    border: 2px solid #3a5070;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
+    max-width: 720px;
+    width: 100%;
+}
+#result-name {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #a0c0e0;
+    margin-bottom: 10px;
+}
+#result-score {
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: 'Morpheus', serif;
+    margin-bottom: 15px;
+}
+#result-details {
+    margin-top: 20px;
+}
+#restart-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 14px 50px;
+    background: linear-gradient(180deg, #2a4060, #1a2a40);
+    border: 2px solid #5080b0;
+    border-radius: 8px;
+    color: #e0e8f4;
+    cursor: pointer;
+}
+.hidden {
+    display: none !important;
+}
+#start-btn:hover, #next-btn:hover, #restart-btn:hover {
+    background: linear-gradient(180deg, #3a5070, #2a3a55);
+    box-shadow: 0 0 20px rgba(100, 150, 220, 0.3);
+}
+#answer-options button:hover {
+    border-color: #5080b0;
+    color: #d0dce8;
+}
+#player-name:focus, #player-rank:focus {
+    border-color: #6090c0;
+    box-shadow: 0 0 15px rgba(100, 150, 220, 0.25);
+    outline: none;
+}
