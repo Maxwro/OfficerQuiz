@@ -1,4 +1,6 @@
 @import url(https://fonts.cdnfonts.com/css/morpheus);
+
+/* --- Reset & Base --- */
 * {
     margin: 0;
     padding: 0;
@@ -13,19 +15,12 @@ body {
     color: #d0d8e8;
     font-family: 'Morpheus', serif;
 }
-#start-screen {
-    background: linear-gradient(170deg, #0e1524, #101828);
-    border: 2px solid #3a5070;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
-    max-width: 720px;
-    width: 100%;
-}
+
+/* --- Typography --- */
 h1 {
     text-align: center;
     font-family: 'Morpheus', serif;
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
     color: #bcc6cc;
     margin-bottom: 5px;
 }
@@ -42,6 +37,23 @@ label {
     margin-bottom: 5px;
     color: #8aaad0;
 }
+
+/* --- Screens (shared) --- */
+#start-screen, #quiz-screen, #result-screen {
+    background: linear-gradient(170deg, #0e1524, #101828);
+    border: 2px solid #3a5070;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
+    max-width: 720px;
+    width: 100%;
+    transition: opacity 0.5s;
+}
+.hidden {
+    display: none !important;
+}
+
+/* --- Start Screen --- */
 #player-name, #player-rank {
     width: 100%;
     padding: 12px 18px;
@@ -51,40 +63,37 @@ label {
     color: #e0e8f4;
     font-size: 1.1rem;
 }
-#start-btn {
-    display: block;
-    margin: 20px auto 0;
-    padding: 14px 50px;
-    background: linear-gradient(180deg, #2a4060, #1a2a40);
-    border: 2px solid #5080b0;
-    border-radius: 8px;
-    color: #e0e8f4;
-    cursor: pointer;
+#player-name:focus, #player-rank:focus {
+    border-color: #6090c0;
+    box-shadow: 0 0 15px rgba(100, 150, 220, 0.25);
+    outline: none;
 }
-#quiz-screen {
-    background: linear-gradient(170deg, #0e1524, #101828);
-    border: 2px solid #3a5070;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
-    max-width: 720px;
-    width: 100%;
-}
+
+/* --- Quiz Screen --- */
 #question-info {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
     color: #8aaad0;
 }
+#quiz-name {
+    text-align: right;
+    font-family: 'Morpheus', serif;
+    font-size: 1.2rem;
+    color: #a0d4ff;
+    animation: pulse-glow 4s infinite;
+}
 #question-text {
     font-size: 1.15rem;
     line-height: 1.6;
     margin-bottom: 25px;
+    transition: opacity 0.5s;
 }
 #answer-options {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transition: opacity 0.5s;
 }
 #answer-options button {
     padding: 14px 18px;
@@ -96,25 +105,12 @@ label {
     font-size: 1.05rem;
     text-align: left;
 }
-#next-btn {
-    display: block;
-    margin: 20px auto 0;
-    padding: 14px 50px;
-    background: linear-gradient(180deg, #2a4060, #1a2a40);
-    border: 2px solid #5080b0;
-    border-radius: 8px;
-    color: #e0e8f4;
-    cursor: pointer;
+#answer-options button:hover {
+    border-color: #5080b0;
+    color: #d0dce8;
 }
-#result-screen {
-    background: linear-gradient(170deg, #0e1524, #101828);
-    border: 2px solid #3a5070;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 0 30px rgba(100, 140, 200, 0.12);
-    max-width: 720px;
-    width: 100%;
-}
+
+/* --- Result Screen --- */
 #result-name {
     text-align: center;
     font-size: 1.3rem;
@@ -130,7 +126,9 @@ label {
 #result-details {
     margin-top: 20px;
 }
-#restart-btn {
+
+/* --- Buttons (shared) --- */
+#start-btn, #next-btn, #restart-btn {
     display: block;
     margin: 20px auto 0;
     padding: 14px 50px;
@@ -140,19 +138,12 @@ label {
     color: #e0e8f4;
     cursor: pointer;
 }
-.hidden {
-    display: none !important;
-}
 #start-btn:hover, #next-btn:hover, #restart-btn:hover {
     background: linear-gradient(180deg, #3a5070, #2a3a55);
     box-shadow: 0 0 20px rgba(100, 150, 220, 0.3);
 }
-#answer-options button:hover {
-    border-color: #5080b0;
-    color: #d0dce8;
-}
-#player-name:focus, #player-rank:focus {
-    border-color: #6090c0;
-    box-shadow: 0 0 15px rgba(100, 150, 220, 0.25);
-    outline: none;
+@keyframes pulse-glow {
+    0% { color: #607090; text-shadow: none; }
+    50% { color: #ffffff; text-shadow: 0 0 20px rgba(160, 212, 255, 1), 0 0 60px rgba(160, 212, 255, 0.6); }
+    100% { color: #607090; text-shadow: none; }
 }

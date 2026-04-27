@@ -13,6 +13,17 @@ const resultName = document.getElementById('result-name')
 const resultScore = document.getElementById('result-score')
 const resultDetails = document.getElementById('result-details')
 const restartBtn = document.getElementById('restart-btn')
+const quizName = document.getElementById('quiz-name')
+
+function shuffle(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1))
+        var temp = array[i]
+        array[i] = array[j]
+        array[j] = temp
+    }
+    return array
+}
 
 const questions = [
     {
@@ -24,7 +35,7 @@ const questions = [
     },
     {
         question: "When was The Lion Company founded?",
-        answers: ["November 23rd, 2004", "May 2nd, 2011", "March 21st, 2025", "December 12th, 2025"],
+        answers: ["November 23rd, 2004", "May 2nd, 2011", "April 21st, 2025", "December 12th, 2025"],
         correct: 2,
         category: "general",
         forPlayer: null
@@ -169,6 +180,34 @@ const questions = [
         correct: 0,
         category: "officer-training",
         forPlayer: "Olath"
+    },
+    {
+        question: "Who has the final say on approving events?",
+        answers: ["Any officer can approve events", "The Commander", "It's decided by a coin flip at HQ", "The new recruit who hasn't done their intro yet even though it's been months since they joined"],
+        correct: 1,
+        category: "commander",
+        forPlayer: null
+    },
+    {
+        question: "How should the Commander handle a major change in the guild?",
+        answers: ["Just do it and inform the officers later", "Discuss it with the officers first", "Post a notice on the HQ bulletin board and hope everyone reads it", "Send a letter to the King and wait the required 4-5 months for it to be denied"],
+        correct: 1,
+        category: "commander",
+        forPlayer: null
+    },
+    {
+        question: "How is a new Commander appointed?",
+        answers: ["The previous Commander picks their successor", "Whoever has the best transmog", "The officers vote on it", "Whoever comes out unscarred from Goldshire Inn"],
+        correct: 2,
+        category: "commander",
+        forPlayer: null
+    },
+    {
+        question: "How does the Commander oversee the other officer branches?",
+        answers: ["They trust the officers to handle their branch and step in only when needed", "They send a moff to each officer every morning with a to-do list", "They assign daily reports to each officer", "They don't — the Commander only handles paperwork"],
+        correct: 0,
+        category: "commander",
+        forPlayer: null
     }
 ]
 
@@ -187,7 +226,8 @@ const shadeMessages = [
 ]
 
 const knownPlayers = {
-    'shadesliverg': { rank: 'officer-event', name: 'ShadesliverG' },
+    'shadesliverg': { rank: 'officer-event', name: 'Shadesliver' },
+    'shadeg': { rank: 'officer-event', name: 'Shadesliver' },
     'chennoa': { rank: 'officer-intro', name: 'Chennoa' },
     'chenn': { rank: 'officer-intro', name: 'Chennoa' },
     'chen': { rank: 'officer-intro', name: 'Chennoa' },
@@ -197,8 +237,8 @@ const knownPlayers = {
     'lía': { rank: 'officer-training', name: 'Lianhua' },
     'ale': { rank: 'officer-training', name: 'Lianhua' },
     'alethea': { rank: 'officer-training', name: 'Lianhua' },
-    'olath': { rank: 'officer-training', name: 'Olath' },
-    'olathus': { rank: 'officer-training', name: 'Olath' },
+    'olath': { rank: 'officer-training', name: 'Olathus' },
+    'olathus': { rank: 'officer-training', name: 'Olathus' },
     'pilkin': { rank: ['officer-event', 'officer'], name: 'Pilkin' },
     'leylnaari': { rank: ['officer-event', 'officer'], name: 'Pilkin' },
     'thalryssla': { rank: 'commander', name: 'Thalryssla' },
@@ -306,9 +346,11 @@ function showQuestion() {
     questionText.textContent = q.question
     nextBtn.hidden = true
     answerOptions.innerHTML = ''
-    q.answers.forEach(function(answer, index) {
+    var shuffledIndexes = [0, 1, 2, 3]
+    shuffle(shuffledIndexes)
+    shuffledIndexes.forEach(function(index) {
         const btn = document.createElement('button')
-        btn.textContent = answer
+        btn.textContent = q.answers[index]
         btn.addEventListener('click', function() {
             playerAnswers[currentQuestion] = index
             Array.from(answerOptions.children).forEach(function(b) {
@@ -323,6 +365,61 @@ function showQuestion() {
     })
 }
 
+function pulseNumber(element) {
+    element.style.transform = 'scale(1.3)'
+    setTimeout(function() {
+        element.style.transform = 'scale(1)'
+    }, 80)
+}
+
+function countDown(start, end, delay, callback) {
+    var current = start
+    var timer = setInterval(function() {
+        resultScore.textContent = current + ' / 10'
+        pulseNumber(resultScore)
+        current--
+        if (current < end) {
+            clearInterval(timer)
+            if (callback) callback()
+        }
+    }, delay)
+}
+
+function animateScore(score, total) {
+    resultScore.style.fontSize = '4rem'
+    resultScore.style.transition = 'font-size 0.3s, transform 0.1s'
+
+    if (score === 0) {
+        countDown(20, 0, 100, function() {
+            resultScore.textContent = '0 / ' + total
+            resultScore.style.fontSize = '2.5rem'
+            pulseNumber(resultScore)
+        })
+    } else if (score <= 4) {
+        countDown(20, 10, 100, function() {
+            resultScore.textContent = '10 / ' + total
+            pulseNumber(resultScore)
+            setTimeout(function() {
+                countDown(9, score, 100, function() {
+                    resultScore.textContent = score + ' / ' + total
+                    resultScore.style.fontSize = '2.5rem'
+                    pulseNumber(resultScore)
+                })
+            }, 1000)
+        })
+    } else {
+        countDown(20, score - 1, 100, function() {
+            resultScore.textContent = (score - 1) + ' / ' + total
+            pulseNumber(resultScore)
+            setTimeout(function() {
+                resultScore.textContent = score + ' / ' + total
+                resultScore.style.fontSize = '2.5rem'
+                pulseNumber(resultScore)
+            }, 800)
+        })
+    }
+}
+
 function showResults() {
     const name = playerName.value.trim()
     let score = 0
@@ -333,7 +430,7 @@ function showResults() {
     })
 
     resultName.textContent = name
-    resultScore.textContent = score + ' / ' + activeQuestions.length
+    animateScore(score, activeQuestions.length)
 
     resultDetails.innerHTML = ''
     activeQuestions.forEach(function(q, i) {
@@ -374,30 +471,62 @@ startBtn.addEventListener('click', function() {
     }
 
     activeQuestions = getQuestionsForPlayer(name, rank)
+    activeQuestions = shuffle(activeQuestions)
+    activeQuestions = activeQuestions.slice(0, 10)
     currentQuestion = 0
     playerAnswers = []
+        var player = knownPlayers[name.toLowerCase()]
+        var displayName = player ? player.name : name
+    quizName.textContent = displayName
+    startScreen.style.opacity = '0'
+    setTimeout(function() {
     startScreen.hidden = true
+    quizScreen.style.opacity = '0'
     quizScreen.hidden = false
+    setTimeout(function() {
+    quizScreen.style.opacity = '1'
+    }, 50)
     showQuestion()
+    }, 500)
 })
 
 nextBtn.addEventListener('click', function() {
     currentQuestion++
     if (currentQuestion < activeQuestions.length) {
-        showQuestion()
+        answerOptions.style.opacity = '0'
+        questionText.style.opacity = '0'
+        setTimeout(function() {
+      showQuestion()
+      answerOptions.style.opacity = '1'
+      questionText.style.opacity = '1'
+  }, 500)
     } else {
-        quizScreen.hidden = true
-        resultScreen.hidden = false
-        showResults()
+        quizScreen.style.opacity = '0'
+          setTimeout(function() {
+              quizScreen.hidden = true
+              resultScreen.style.opacity = '0'
+              resultScreen.hidden = false
+              setTimeout(function() {
+                  resultScreen.style.opacity = '1'
+              }, 50)
+              showResults()
+          }, 500)
     }
 })
 
 restartBtn.addEventListener('click', function() {
+    resultScreen.style.opacity = '0'
+    setTimeout(function () {
     resultScreen.hidden = true
+    startScreen.style.opacity = '0'
     startScreen.hidden = false
     currentQuestion = 0
     playerAnswers = []
     playerName.value = ''
     playerRank.value = ''
     nextBtn.hidden = true
+    setTimeout(function() {
+        startScreen.style.opacity = '1'
+    }, 50)
+}, 500)
 })
