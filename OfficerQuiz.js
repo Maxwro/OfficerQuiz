@@ -179,7 +179,7 @@ const questions = [
         answers: ["A 1v1 RP sparrathus match", "A lecture on the history of Stormwindathus", "Formathus drills until someone faintathus", "Daveathus tries to dodge glaivathus"],
         correct: 0,
         category: "officer-training",
-        forPlayer: "Olath"
+        forPlayer: "Olathus"
     },
     {
         question: "Who has the final say on approving events?",
@@ -280,7 +280,14 @@ function checkPlayerIdentity(name, rank) {
         return false
     }
 
+    if (!player && ['officer-event', 'officer-intro', 'officer-training', 'officer-general'].includes(rank)) {
+        alert("Hey... I know you're not an officer... I'm Shade after all...")
+        return false
+    }
+
     if (player) {
+        if (rank === 'officer-general') return true
+
         const allowedRanks = Array.isArray(player.rank) ? player.rank : [player.rank]
 
         if (player.name === 'Thalryssla' && !allowedRanks.includes(rank)) {
@@ -299,7 +306,7 @@ function checkPlayerIdentity(name, rank) {
             return false
         }
 
-        if (player.name === 'Olath' && !allowedRanks.includes(rank)) {
+        if (player.name === 'Olathus' && !allowedRanks.includes(rank)) {
             alert("Hey, Olath. I know you're training officer, come on. Wait did you try the test already? Uhhh... try another name!")
             return false
         }
@@ -332,7 +339,7 @@ function getQuestionsForPlayer(name, rank) {
             return false
         }
         if (q.category === 'general') return true
-        if (q.category === 'officer') return true
+        if (q.category === 'officer' && (rank === 'officer-general' || rank === 'commander')) return true
         if (q.category === rank) return true
         if (rank === 'commander') return true
         return false
