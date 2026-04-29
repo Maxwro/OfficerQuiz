@@ -158,7 +158,8 @@ const questions = [
         answers: ["A 1v1 RP sparring match between attendees", "A 5km jog around Stormwind", "Reading from the Lion Company handbook, chapter by chapter", "Dave's glaive dodging drills"],
         correct: 0,
         category: "officer-training",
-        forPlayer: null
+        forPlayer: null,
+        excludePlayer: "Olathus"
     },
     {
         question: "What is the correct combat formation?",
@@ -254,7 +255,7 @@ function isBlockedName(name) {
 }
 
 function checkPlayerIdentity(name, rank) {
-    const lower = name.toLowerCase()
+    let lower = name.toLowerCase()
 
     if (isBlockedName(lower)) {
         shadeLocked = true
@@ -271,6 +272,7 @@ function checkPlayerIdentity(name, rank) {
 
     if (lower.endsWith('athus') && !knownPlayers[lower]) {
         alert("I just knew you'd do that.")
+        lower = 'olathus'
     }
 
     const player = knownPlayers[lower]
@@ -428,7 +430,9 @@ function animateScore(score, total) {
 }
 
 function showResults() {
-    const name = playerName.value.trim()
+    const rawName = playerName.value.trim()
+    const player = knownPlayers[rawName.toLowerCase()]
+    const name = player ? player.name : rawName
     let score = 0
     activeQuestions.forEach(function(q, i) {
         if (isAnswerCorrect(playerAnswers[i], q.correct)) {
